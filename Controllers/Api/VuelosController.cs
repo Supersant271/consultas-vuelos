@@ -38,7 +38,7 @@ public class Vueloscontroller : ControllerBase {
      }
 
     [HttpGet("listar-vuelos")] 
-    public ActionResult ListarVuelos (string? estatus, string? origen, string? destino) { 
+    public ActionResult ListarVuelos (string? estatus, string? origen, string? destino, string? fechaInicial, string? fechaFinal) { 
         var client = new MongoClient (CadenaConexion.MONGO_DB); 
         var db = client.GetDatabase("Aeropuerto"); 
         var collection = db.GetCollection<Vuelo>("Vuelos"); 
@@ -60,6 +60,25 @@ public class Vueloscontroller : ControllerBase {
             filters.Add(filterDestino); 
          } 
 
+
+            if(!string.IsNullOrWhiteSpace(fechaInicial))
+{
+    if(DateTime.TryParse(fechaInicial, out DateTime fecha))
+    {
+        var filtroFechaIni = Builders<Vuelo>.Filter.Gte(x => x.FechaHoraSalida, fecha);
+        filters.Add(filtroFechaIni);
+    }
+}
+
+if(!string.IsNullOrWhiteSpace(fechaFinal))
+{
+    if(DateTime.TryParse(fechaFinal, out DateTime fecha))
+    {
+        var filtroFechaFin = Builders<Vuelo>.Filter.Lte(x => x.FechaHoraSalida,
+            new DateTime(fecha.Year, fecha.Month, fecha.Day, 23, 59, 59));
+        filters.Add(filtroFechaFin);
+    }
+}
         List<Vuelo> vuelos; 
         if(filters.Count > 0) { 
          var filter = Builders<Vuelo>.Filter.And(filters); 
