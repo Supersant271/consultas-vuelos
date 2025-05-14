@@ -1,5 +1,5 @@
-importar Datos erróneos de "./MisDatos";
+import MisDatos from "./MisDatos";
 
-exportar constante componentes:{ [llave:cadena]:Reaccionar.FC<cualquier> } = {
-    Datos erróneos
+export const components: { [key: string]: React.FC<any> } = {
+    MisDatos
 };

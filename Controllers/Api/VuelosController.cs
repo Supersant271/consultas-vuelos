@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;   
 
@@ -56,7 +57,7 @@ public class Vueloscontroller : ControllerBase {
          } 
 
          if(!string.IsNullOrWhiteSpace (destino)) { 
-            var filterEstatus = Builders<Vuelo>.Filter.Eq(x => x.CiudadDestino, origen); 
+            var filterDestino = Builders<Vuelo>.Filter.Eq(x => x.CiudadDestino, origen); 
             filters.Add(filterDestino); 
          } 
 

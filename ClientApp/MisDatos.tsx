@@ -1,9 +1,9 @@
-constante Datos erróneos = () => {
-    constante fecha = nuevo Fecha();
+const MisDatos = () => {
+    const date = new Date();
 
-    devolver (
-        <división>{fecha.aISOString()}</división>
+    return (
+        <div>{date.toISOString()}</div>
     )
 }
 
-exportar por defecto Datos erróneos;
+export default MisDatos;

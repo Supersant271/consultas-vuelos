@@ -1,31 +1,31 @@
 // ClientApp/index.tsx
-importar Reaccionar de 'reaccionar';
-importar { crearRaíz } de 'react-dom/cliente';
-importar { componentes } de './componentes';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { components } from './components';
 
-documento.añadirListener de eventos('DOMContentLoaded', () => {
-  constante elemento raíz = documento.obtenerElementoPorId('react-root');
-  si (!elemento raíz) devolver;
+document.addEventListener('DOMContentLoaded', () => {
+  const rootElement = document.getElementById('react-root');
+  if (!rootElement) return;
 
-  constante nombreDeComponente = elemento raíz.obtenerAtributo('componente de datos');
-  constante Datos de apoyo = elemento raíz.obtenerAtributo('propiedades de datos');
+  const componentName = rootElement.getAttribute('data-component');
+  const propsData = rootElement.getAttribute('data-props');
 
-  si (!nombreDeComponente || !(nombreDeComponente en componentes)) {
-    consola.error(`Componente "${nombreDeComponente}" no encontrado.`);
-    devolver;
+  if (!componentName || !(componentName in components)) {
+    console.error(`Componente "${componentName}" no encontrado.`);
+    return;
   }
 
-  dejar accesorios = {};
-  si (Datos de apoyo) {
-    intentar {
-      accesorios = JSON.analizar gramaticalmente(Datos de apoyo);
-    } atrapar (mi) {
-      consola.registro(Datos de apoyo);
-      consola.error('Error al analizar data-props:', mi);
+  let props = {};
+  if (propsData) {
+    try {
+      props = JSON.parse(propsData);
+    } catch (e) {
+      console.log(propsData);
+      console.error('Error al parsear data-props:', e);
     }
   }
 
-  constante Componente = componentes[nombreDeComponente];
-  constante raíz = crearRaíz(elemento raíz);
-  raíz.prestar(<Componente {...accesorios} />);
+  const Component = components[componentName];
+  const root = createRoot(rootElement);
+  root.render(<Component {...props} />);
 });
