@@ -5,7 +5,7 @@ using MongoDB.Driver;
 [Route("Api/Vuelos")] 
 
 public class Vueloscontroller : ControllerBase {
-    [HttpGet("Ciudades_origen")]
+    [HttpGet("Ciudades-origen")]
     public IActionResult CiudadesOrigen(){
         var client = new MongoClient (CadenaConexion.MONGO_DB);
         var db = client.GetDatabase ("Aeropuerto");
@@ -16,7 +16,7 @@ public class Vueloscontroller : ControllerBase {
         return Ok(Lista);
     }
 
-    [HttpGet("Ciudades_destino")]
+    [HttpGet("Ciudades-destino")]
     public IActionResult CiudadesDestino(){
         var client = new MongoClient (CadenaConexion.MONGO_DB);
         var db = client.GetDatabase ("Aeropuerto");
@@ -57,7 +57,7 @@ public class Vueloscontroller : ControllerBase {
          } 
 
          if(!string.IsNullOrWhiteSpace (destino)) { 
-            var filterDestino = Builders<Vuelo>.Filter.Eq(x => x.CiudadDestino, origen); 
+            var filterDestino = Builders<Vuelo>.Filter.Eq(x => x.CiudadDestino, destino); 
             filters.Add(filterDestino); 
          } 
 
